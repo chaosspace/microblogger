@@ -1,21 +1,16 @@
 import './App.css';
-import { Route,Switch,Redirect } from 'react-router-dom';
+import Routes from './router/routeChart';
 
-import Login from './pages/login';
-import Register from './pages/register'
-import Passages from './pages/passages'
+import { Outlet,useRoutes } from 'react-router-dom';
 
-function App() {
+
+export default function App() {
+  const routes = useRoutes(Routes)
   return (
     <div className="App">
-      <Switch>
-        <Route path={'/login'} component={Login}></Route>
-        <Route path={'/register'} component={Register}></Route>
-        <Route path={'/home'} component={Passages}></Route>
-        <Redirect to={'/login'} />
-      </Switch>
+      { routes }
+
+      <Outlet />
     </div>
   );
 }
-
-export default App;

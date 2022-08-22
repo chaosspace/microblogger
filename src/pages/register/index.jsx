@@ -13,6 +13,14 @@ export default class Register extends Component {
   register = () => {
 
   }
+  //边框样式切换
+  iptOnFocus = (e) => {
+    e.target.style.borderColor = 'black'
+  }
+  iptOnBlur = (e) => {
+    console.log(e.target);
+    e.target.style.borderColor = 'rgb(91, 130, 248)'
+  }
 
   render() {
     return (
@@ -22,15 +30,15 @@ export default class Register extends Component {
         </div>
         <div className={registerCss.iptWraper}>
           <div className={registerCss.iptInfo}>昵称</div>
-          <div><input onChange={(e)=>{this.setState({name:e.target.value})}} className={registerCss.ipt} type="text" /></div>
+          <div><input onFocus={this.iptOnFocus} onBlur={this.iptOnBlur} onChange={(e)=>{this.setState({name:e.target.value})}} className={registerCss.ipt} type="text" /></div>
         </div>
         <div className={registerCss.iptWraper}>
           <div className={registerCss.iptInfo}>密码</div>
-          <div><input onChange={(e)=>{this.setState({password:e.target.value})}} className={registerCss.ipt} type="password" /></div>
+          <div><input onFocus={this.iptOnFocus} onBlur={this.iptOnBlur} onChange={(e)=>{this.setState({password:e.target.value})}} className={registerCss.ipt} type="password" /></div>
         </div>
         <div className={registerCss.iptWraper}>
           <div className={registerCss.iptInfo}>再次输入密码</div>
-          <div><input onChange={(e)=>{this.setState({ensurePassword:e.target.value})}} className={registerCss.ipt} type="password" /></div>
+          <div><input onFocus={this.iptOnFocus} onBlur={this.iptOnBlur} onChange={(e)=>{this.setState({ensurePassword:e.target.value})}} className={registerCss.ipt} type="password" /></div>
         </div>
         <div onClick={this.register} className={registerCss.registerBtn}>
           <div>注册</div>
