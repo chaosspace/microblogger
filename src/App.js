@@ -1,6 +1,5 @@
 import './App.css';
 import Routes from './router/routeChart';
-
 import { Outlet,useRoutes } from 'react-router-dom';
 
 

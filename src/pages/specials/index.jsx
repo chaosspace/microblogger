@@ -1,8 +1,31 @@
 import React, { Component } from 'react'
 
 import specialsCss from './specials.module.css'
+import { httpReq } from '../../tool/httpReq'
 
 export default class Specials extends Component {
+  //状态初始化
+  state ={
+    articleList:'',
+            userInfo:'',
+            header:''
+  }
+  componentDidMount = () => {
+    httpReq('get',`/publish/column?columnId=1&userId=7`)
+    .then(
+      res => {
+        console.log(res)
+        this.setState(
+          {
+            articleList:res.data.articleList,
+            userInfo:res.data.user,
+            header:res.data.column
+          }
+        )
+      },
+      err => console.log(err)
+    )
+  }
   render() {
     return (
       <div className={specialsCss.container}>
