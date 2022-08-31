@@ -1,32 +1,82 @@
-import React, { Component } from 'react'
+import React from "react";
 
-import specialsCss from './specials.module.css'
-import { httpReq } from '../../tool/httpReq'
+import specialsCss from "./specials.module.css";
+import { httpReq } from "../../tool/httpReq";
+import Article from "./article";
+import { useEffect } from "react";
+import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
-export default class Specials extends Component {
+export default function Specials () {
   //状态初始化
-  state ={
-    articleList:'',
-            userInfo:'',
-            header:''
-  }
-  componentDidMount = () => {
-    httpReq('get',`/publish/column?columnId=1&userId=7`)
-    .then(
-      res => {
-        console.log(res)
-        this.setState(
-          {
-            articleList:res.data.articleList,
-            userInfo:res.data.user,
-            header:res.data.column
-          }
-        )
+  const [state, setState] = useState({
+    articleList: "",
+    authorInfo: "",
+    header: "",
+    isLoading:true
+  })
+  //获取searchParams
+  const [searchParams] = useSearchParams();
+  //在挂载时获取数据
+  useEffect(() => {
+    httpReq("get", `/publish/column?columnId=1&userId=1`).then(
+      (res) => {
+        //将数据存在状态中
+        setState({
+          userId:searchParams.get('id'),
+          articleList: res.data.articleList,
+          authorInfo: res.data.user,
+          header: res.data.column,
+          isLoading:false
+        });
       },
-      err => console.log(err)
-    )
+      (err) => console.log(err)
+    );
+  },[])
+  //提示函数
+  function tip(tips, flag){
+    let tipNode = document.createElement("div");
+    tipNode.innerText = tips;
+    if (flag === "success") {
+      tipNode.style.color = "greenyellow";
+    }
+    document.body.appendChild(tipNode);
+    tipNode.style.animation = "tips 1.5s linear";
+    tipNode.classList.add("tip");
+    //等待时间后 移除提示
+    setTimeout(() => {
+      document.body.removeChild(tipNode);
+    }, 1500);
   }
-  render() {
+  //关注函数
+  function follow (){
+    //发送关注请求
+    const { isfollow, id: authorId } = state.authorInfo;
+    let followFlag = isfollow ? 2 : 1;
+    httpReq(
+      "post",
+      `/follow?userId=${state.userId}&authorId=${authorId}&type=${followFlag}`
+    ).then(
+      (res) => {
+        tip(res.status_msg, "success");
+        //在状态中变更数据
+        const result = state.authorInfo;
+        result.isfollow = !result.isfollow;
+        setState({
+          articleList: state.articleList,
+          header: state.header,
+          authorInfo: result,
+          userId:state.userId
+        });
+      },
+      (err) => console.log(err)
+    );
+  };
+  if(!state.isLoading){
+    const { title, introduction, coverUrl } = state.header;
+    const { headUrl, username, isfollow } = state.authorInfo;
+    const { articleList } = state
+    let articles = [...articleList]
     return (
       <div className={specialsCss.container}>
         <div className={specialsCss.header}>
@@ -34,41 +84,34 @@ export default class Specials extends Component {
           <div>推荐</div>
         </div>
         <div className={specialsCss.specialsInfo}>
-          <div className={specialsCss.img}></div>
+          <div className={specialsCss.img}>
+            <img width={'220px'} height={'222px'} src={coverUrl} alt="nosource" />
+          </div>
           <div>
-            <div className={specialsCss.title}>大学生就该这样</div>
+            <div className={specialsCss.title}>{title}</div>
             <div>
-              <span className={specialsCss.brief}>
-              简介: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar sic tempor. Sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed rhoncus pronin sapien nunc accuan eget.
-              </span>
+              <span className={specialsCss.brief}>简介: {introduction}</span>
             </div>
             <div className={specialsCss.personalInfo}>
               <div>
-                <div className={specialsCss.avatar}></div>
-                <div className={specialsCss.name}>ply</div>
+                <div className={specialsCss.avatar}>
+                  <img style={{width:'35px', height:'35px',borderRadius:'50%'}} src={headUrl} alt="nosource" />
+                </div>
+                <div className={specialsCss.name}>{username}</div>
               </div>
-              <div className={specialsCss.operation}>
-                已关注
+              <div onClick={follow} className={specialsCss.operation}>
+                {isfollow ? "已关注" : "关注"}
               </div>
             </div>
           </div>
         </div>
         <div className={specialsCss.category}>
-          目录:
-          <div className={specialsCss.passages}>
-            <div className={specialsCss.passagesTitle}>《拒绝摆烂人生》</div>
-            <div className={specialsCss.passagesContent}>
-            首先学生自己要明白，上大学的意义，端正学习态度。其次，这个时候辅导员的重要性就更加明显了。进入大学，肯定会鼓励学生积极参加社团活动丰富大学生活，但是也要告诉学生不要被五光十色的大学生活迷乱了眼。要摆正思想，学习依旧是大学生最重要且紧.....
-            </div>
-          </div>
-          <div className={specialsCss.passages}>
-
-          </div>
-          <div className={specialsCss.passages}>
-
-          </div>
+          目录 :
+          {articles.map((article) => {
+            return <Article key={article.id} data={article} />
+          })}
         </div>
       </div>
-    )
+    );
   }
 }

@@ -90,6 +90,7 @@
   font-style: normal;
   font-size: 16px;
   color: #AAAAAA;
+  cursor: pointer;
 }
 .category{
   font-family: 'Arial Negreta', 'Arial Normal', 'Arial', sans-serif;
@@ -112,7 +113,7 @@
   width: 653px;
   margin-top: 15px;
   padding: 0 25px;
-
+  cursor: pointer;
   padding-top: 15px;
   background-color: white;
   box-shadow: 5px 5px 5px rgb(215 215 215 / 35%);

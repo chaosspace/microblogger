@@ -21,6 +21,7 @@ export default class Login extends Component {
       httpReq('post',`/user/login?username=${name}&password=${password}`)
       .then(
         res => {
+          console.log(res);
           if(res.status_code === 0){//登录成功
             this.tip(res.status_msg, 'success')
             setTimeout(()=>{
