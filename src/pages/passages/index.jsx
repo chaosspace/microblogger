@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useLocation, useSearchParams, NavLink } from "react-router-dom";
 
 import { httpReq } from "../../tool/httpReq";
 import passagesCss from "./passages.module.css";
@@ -23,6 +23,9 @@ export default function Passages() {
       (err) => console.log(err)
     );
   },[]);
+  //从stateParams参数中获取userId
+  const { state:stateParams } = useLocation()
+
   if(!state.isloading){
     const { columnTitle, content, articleTitle, createDate } = state.data.article
     const { username, headUrl } = state.data.user
@@ -32,7 +35,9 @@ export default function Passages() {
           <div>关注</div>
           <div>推荐</div>
         </div>
-        <div className={passagesCss.specialsTitle}>{columnTitle}</div>
+        <NavLink to={`/home/specials?id=${stateParams.userId}`}>
+          <div className={passagesCss.specialsTitle}>{columnTitle}</div>
+        </NavLink>
         <div className={passagesCss.passagesWraper}>
           <div className={passagesCss.passagesTitle}>{articleTitle}</div>
           <span className={passagesCss.authorInfo}>

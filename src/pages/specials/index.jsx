@@ -24,6 +24,7 @@ export default function Specials () {
         //将数据存在状态中
         setState({
           userId:searchParams.get('id'),
+          columnId:1,
           articleList: res.data.articleList,
           authorInfo: res.data.user,
           header: res.data.column,
@@ -66,7 +67,8 @@ export default function Specials () {
           articleList: state.articleList,
           header: state.header,
           authorInfo: result,
-          userId:state.userId
+          userId:state.userId,
+          columnId:state.columnId
         });
       },
       (err) => console.log(err)
@@ -108,7 +110,7 @@ export default function Specials () {
         <div className={specialsCss.category}>
           目录 :
           {articles.map((article) => {
-            return <Article key={article.id} data={article} />
+            return <Article key={article.id} data={article} from={state.columnId} userId={state.userId} />
           })}
         </div>
       </div>

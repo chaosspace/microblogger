@@ -16,7 +16,7 @@
 .header > div {
   cursor: pointer;
   font-size: 18px;
-  color: #7F7F7F;
+  color: #7F7F7F!important;
   margin: 40px;
 }
 .specialsInfo{
@@ -28,7 +28,7 @@
   display: flex;
   justify-content: center;
   font-size: 14px;
-  color: #333333;
+  color: #333333!important;
   padding-top: 25px;
   padding-right: 80px;
   position: relative;
@@ -89,7 +89,7 @@
   font-weight: 900;
   font-style: normal;
   font-size: 16px;
-  color: #AAAAAA;
+  color: #AAAAAA!important;
   cursor: pointer;
 }
 .category{
@@ -100,7 +100,7 @@
   width: 660px;
   margin: 15px auto;
 }
-.category > .passages:first-child{
+.category  .passages:first-child{
   height: 137px;
   width: 653px;
   border-radius: 10px;
@@ -108,7 +108,7 @@
   box-shadow: 5px 5px 5px rgb(215 215 215 / 35%);
   margin-top: 20px;
 }
-.category > .passages{
+.category  .passages{
   height: 137px;
   width: 653px;
   margin-top: 15px;
@@ -118,7 +118,7 @@
   background-color: white;
   box-shadow: 5px 5px 5px rgb(215 215 215 / 35%);
 }
-.category > .passages > .passagesTitle{
+.category  .passages > .passagesTitle{
   white-space: nowrap;
   text-transform: none;
   font-size: 18px;
@@ -129,12 +129,12 @@
   position: relative;
   right: 4px;
 }
-.category > .passages > .passagesContent{
+.category  .passages > .passagesContent{
   font-family: '等线', sans-serif;
   font-weight: 400;
   font-style: normal;
   font-size: 16px;
   word-wrap: break-word;
   text-transform: none;
-  color: #7F7F7F;
+  color: #7F7F7F!important;
 }
