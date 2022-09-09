@@ -1,31 +1,9 @@
 import React from "react";
 
 import changeImgCss from "./changeImg.module.css";
-import { httpReq } from "../../../tool/httpReq";
-import { useState } from "react";
 import UploadC from "./Upload";
 
-
 export default function ChangeImg(props) {
-  //状态初始化
-  const [state, setState] = useState({
-    img: "",
-  });
-
-
-
-  //上传图片
-  function upload() {
-    console.log(1);
-    const formData = new FormData();
-    formData.append("file", state.img);
-    httpReq("post", `/static/Image/cover?columnId=1`, formData).then(
-      (res) => {
-        console.log(res);
-      },
-      (err) => console.log(err)
-    );
-  }
 
   return (
     <div className={changeImgCss.changeImg}>
@@ -41,9 +19,8 @@ export default function ChangeImg(props) {
       </div>
 
       <div className={changeImgCss.operation}>
-        <UploadC />
+        <UploadC columnId={props.columnId} setState={props.setState} />
         <div>
-          <div onClick={upload}>上传</div>
           <div
             onClick={function () {
               props.setState((pre) => {

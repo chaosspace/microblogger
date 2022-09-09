@@ -7,7 +7,7 @@ import { useSearchParams } from "react-router-dom";
 import specialsCss from "./specials.module.css";
 import { httpReq } from "../../tool/httpReq";
 import Article from "./article";
-// import ChangeImg from "./changeImg";
+import ChangeImg from "./changeImg";
 
 export default function Specials() {
   //状态初始化
@@ -22,12 +22,12 @@ export default function Specials() {
   const [searchParams] = useSearchParams();
   //在挂载时获取数据
   useEffect(() => {
-    httpReq("get", `/publish/column?columnId=1&userId=1`).then(
+    httpReq("get", `/publish/column?columnId=1&userId=1`).then(//此处columnId userid需要获取
       (res) => {
         //将数据存在状态中
         setState({
           userId: searchParams.get("id"),
-          columnId: 1,
+          columnId: 1,//此处的columnId需要获取
           articleList: res.data.articleList,
           authorInfo: res.data.user,
           header: res.data.column,
@@ -152,7 +152,7 @@ export default function Specials() {
             );
           })}
         </div>
-        {/* {state.isUpload ? <ChangeImg imgUrl={state.header.coverUrl} setState={setState} /> : ""} */}
+        {state.isUpload ? <ChangeImg imgUrl={state.header.coverUrl} setState={setState} columnId={state.columnId} /> : ""}
 
       </div>
     );
