@@ -1,0 +1,39 @@
+.changeImg{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #f2f2f2;
+  position: absolute;
+  left: 50%;
+  top: 200px;
+  transform: translate(-50%);
+  width: 500px;
+  height: 340px;
+  padding: 0 30px;
+  border-radius: 15px;
+  box-shadow: 5px 5px 5px rgb(215 215 215 / 35%);
+}
+.preImg{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 20px;
+  min-height: 200px;
+}
+.preImg > div {
+  margin-right: 20px;
+}
+.operation{
+  text-align: center;
+}
+.operation > div{
+  display: flex;
+  justify-content: center;
+}
+.operation > div > div{
+  padding: 10px;
+  margin: 30px;
+  border-radius: 10px;
+  background-color: white;
+  cursor: pointer;
+}

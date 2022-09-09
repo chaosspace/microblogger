@@ -1,20 +1,23 @@
 import React from "react";
 
-import specialsCss from "./specials.module.css";
-import { httpReq } from "../../tool/httpReq";
-import Article from "./article";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
-export default function Specials () {
+import specialsCss from "./specials.module.css";
+import { httpReq } from "../../tool/httpReq";
+import Article from "./article";
+// import ChangeImg from "./changeImg";
+
+export default function Specials() {
   //状态初始化
   const [state, setState] = useState({
     articleList: "",
     authorInfo: "",
     header: "",
-    isLoading:true
-  })
+    isLoading: true,
+    isUpload: false,
+  });
   //获取searchParams
   const [searchParams] = useSearchParams();
   //在挂载时获取数据
@@ -23,19 +26,20 @@ export default function Specials () {
       (res) => {
         //将数据存在状态中
         setState({
-          userId:searchParams.get('id'),
-          columnId:1,
+          userId: searchParams.get("id"),
+          columnId: 1,
           articleList: res.data.articleList,
           authorInfo: res.data.user,
           header: res.data.column,
-          isLoading:false
+          isLoading: false,
+          isUpload: false,
         });
       },
       (err) => console.log(err)
     );
-  },[])
+  }, []);
   //提示函数
-  function tip(tips, flag){
+  function tip(tips, flag) {
     let tipNode = document.createElement("div");
     tipNode.innerText = tips;
     if (flag === "success") {
@@ -50,7 +54,7 @@ export default function Specials () {
     }, 1500);
   }
   //关注函数
-  function follow (){
+  function follow() {
     //发送关注请求
     const { isfollow, id: authorId } = state.authorInfo;
     let followFlag = isfollow ? 2 : 1;
@@ -67,18 +71,20 @@ export default function Specials () {
           articleList: state.articleList,
           header: state.header,
           authorInfo: result,
-          userId:state.userId,
-          columnId:state.columnId
+          userId: state.userId,
+          columnId: state.columnId,
+          isUpload: false,
         });
       },
       (err) => console.log(err)
     );
-  };
-  if(!state.isLoading){
+  }
+
+  if (!state.isLoading) {
     const { title, introduction, coverUrl } = state.header;
     const { headUrl, username, isfollow } = state.authorInfo;
-    const { articleList } = state
-    let articles = [...articleList]
+    const { articleList } = state;
+    let articles = [...articleList];
     return (
       <div className={specialsCss.container}>
         <div className={specialsCss.header}>
@@ -86,8 +92,26 @@ export default function Specials () {
           <div>推荐</div>
         </div>
         <div className={specialsCss.specialsInfo}>
-          <div className={specialsCss.img}>
-            <img width={'220px'} height={'222px'} src={coverUrl} alt="nosource" />
+          <div
+            onClick={function () {
+              setState({
+                articleList: state.articleList,
+                header: state.header,
+                authorInfo: state.authorInfo,
+                userId: state.userId,
+                columnId: state.columnId,
+                isUpload: true
+              });
+            }}
+            className={specialsCss.img}
+          >
+            <img
+              title="更改图片"
+              width={"220px"}
+              height={"222px"}
+              src={coverUrl}
+              alt="nosource"
+            />
           </div>
           <div>
             <div className={specialsCss.title}>{title}</div>
@@ -97,7 +121,15 @@ export default function Specials () {
             <div className={specialsCss.personalInfo}>
               <div>
                 <div className={specialsCss.avatar}>
-                  <img style={{width:'35px', height:'35px',borderRadius:'50%'}} src={headUrl} alt="nosource" />
+                  <img
+                    style={{
+                      width: "35px",
+                      height: "35px",
+                      borderRadius: "50%",
+                    }}
+                    src={headUrl}
+                    alt="nosource"
+                  />
                 </div>
                 <div className={specialsCss.name}>{username}</div>
               </div>
@@ -110,9 +142,18 @@ export default function Specials () {
         <div className={specialsCss.category}>
           目录 :
           {articles.map((article) => {
-            return <Article key={article.id} data={article} from={state.columnId} userId={state.userId} />
+            return (
+              <Article
+                key={article.id}
+                data={article}
+                from={state.columnId}
+                userId={state.userId}
+              />
+            );
           })}
         </div>
+        {/* {state.isUpload ? <ChangeImg imgUrl={state.header.coverUrl} setState={setState} /> : ""} */}
+
       </div>
     );
   }

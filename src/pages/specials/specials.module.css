@@ -3,7 +3,6 @@
   width: 1121px;
   margin: 0 auto;
 }
-
 .header{
   height: 42px;
   display: flex;
@@ -34,9 +33,9 @@
   position: relative;
 }
 .specialsInfo > .img{
+  cursor: pointer;
   width: 219px;
   height: 222px;
-  background-color: aqua;
   margin-right: 60px;
 }
 .specialsInfo > div > .title{
@@ -137,4 +136,9 @@
   word-wrap: break-word;
   text-transform: none;
   color: #7F7F7F!important;
+  overflow: hidden;
+}
+
+.container > .changeImg > div{
+  
 }

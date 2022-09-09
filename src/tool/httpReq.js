@@ -8,14 +8,15 @@ instance.interceptors.response.use((res) => {
     return res.data
 })
 // 封装axios方法，并导出httpReq为新的请求工具
-export const httpReq = (method, url) => {
+export const httpReq = (method, url, data) => {
   return new Promise((resolve, reject) => {
     instance({
       method: method,
       url: url,
       headers:{
         Authorization:'Bearer '+sessionStorage.getItem('token') || null
-      }
+      },
+      body:null||data
     }).then(
       (data) => {
         resolve(data)
