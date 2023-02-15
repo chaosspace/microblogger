@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 
 import { Link } from "react-router-dom";
-// import { httpReq } from "../../tool/httpReq";
 import { httpReq } from "../../tool/httpReq";
 import loginCss from "./login.module.css";
 
