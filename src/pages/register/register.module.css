@@ -1,0 +1,56 @@
+.container{
+  background-color: white;
+  height: 476px;
+  width: 437px;
+  margin: 0 auto;
+  margin-top: 68px;
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px rgb(215 215 215 / 35%);
+  padding: 0 68px;
+  padding-top: 30px;
+  position: relative;
+}
+.container > .header{
+  color: #3D88F7;
+  font-size: 24px;
+  font-weight: 600;
+  text-align: center;
+}
+.container > .iptWraper{
+  margin-top: 20px;
+}
+.container > .iptWraper > .iptInfo{
+  font-size: 14px;
+  color: #8C8C8C;
+  margin-bottom: 5px;
+}
+.container > .iptWraper > div > .ipt{
+  display: block;
+  width: 100%;
+  height: 36px;
+  line-height: 1em;
+  text-indent: 1em;
+  border: 1px solid rgb(91, 130, 248);
+  border-radius: 5px;
+  color: #8C8C8C;
+  outline: none;
+  cursor: pointer;
+}
+.container > .registerBtn{
+  background-color: rgba(61, 136, 247, 1);
+  width: 140px;
+  height: 36px;
+  border-radius: 5px;
+  margin: 47px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.container > .registerBtn > div {
+  font-size: 13px;
+  color: white;
+}
+.container > .registerBtn:hover{
+  background-color: rgb(5, 162, 214);
+}
